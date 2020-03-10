@@ -21,9 +21,9 @@ pipeline {
                 sh "ls -la ."
             }
         }
-        stage("Pring ENVs")
-            steps {
-               echo "VAR01 = ${env.VAR01}"
-            }
-    }
+//      stage("Pring ENVs")
+//            steps {
+//              echo "VAR01 = ${env.VAR01}"
+//            }
+//      }
 }
