@@ -1,19 +1,29 @@
-node {
-    stage "Create build output"
-    println "ls -la .".execute().text
-    
-    // Make the output directory.
-    sh "mkdir -p output"
+#!groovy
+// Check ub1 properties
+properties([disableConcurrentBuilds()])
 
-    // Write an useful file, which is needed to be archived.
-    writeFile file: "output/usefulfile.txt", text: "This file is useful, need to archive it."
-
-    // Write an useless file, which is not needed to be archived.
-    writeFile file: "output/uselessfile.md", text: "This file is useless, no need to archive it."
-
-    stage "Archive build output"
-    
-    // Archive the build output artifacts.
-    archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
-    println "ls -la .".execute().text
+pipeline {
+    agent { 
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("First step [show date]") {
+            steps {
+                sh 'date'
+            }
+        }
+        stage("Second step [ls workdir]") {
+            steps {
+                sh ""
+            }
+        }
+        stage("Pring ENVs")
+            steps {
+               sh "printenv"
+            }
+    }
 }
