@@ -27,9 +27,11 @@ pipeline {
             }
         }
         stage("Test credential") {
-              echo "====== Test Credential ======"
-              withCredentials([usernamePassword(crdentialsId:'testusername', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-              echo "USERNAME: ${USERNAME}\nPASSWORD: ${PASSWORD}"
+            steps {
+               echo "====== Test Credential ======"
+               withCredentials([usernamePassword(crdentialsId:'testusername', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
+               echo "USERNAME: ${USERNAME}\nPASSWORD: ${PASSWORD}"
+            }
         }
     }
 }
