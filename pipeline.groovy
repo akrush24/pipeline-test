@@ -18,12 +18,12 @@ pipeline {
         }
         stage("Second step [ls workdir]") {
             steps {
-                sh ""
+                sh "ls -la ."
             }
         }
         stage("Pring ENVs")
             steps {
-               sh "printenv"
+               echo "VAR01 = ${env.VAR01}"
             }
     }
 }
