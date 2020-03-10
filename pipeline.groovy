@@ -30,7 +30,9 @@ pipeline {
             steps {
                echo "====== Test Credential ======"
                withCredentials([usernamePassword(credentialsId:'0e996c65-dbb9-49b6-a759-e4a08730b983', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-               echo "USERNAME: $USERNAME\nPASSWORD: $PASSWORD"
+               sh """
+               USERNAME: $USERNAME\nPASSWORD: $PASSWORD
+               """
             }
         }
     }
