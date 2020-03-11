@@ -15,7 +15,7 @@ def nexusPublisher2(Map args=[:]) {
 
     sh '''
        set +x
-       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${NEXUS_REPO}/${NEXUS_DIR_NAME}/${NEXUS_FILENAME}
+       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${NEXUS_REPO}/TEST/${NEXUS_FILENAME}
        curl -i --user ${NEXUS_CREDENTIALS} --upload-file ${NEXUS_FILENAME} ${ARTIFACT_URL}
 
        echo "Successfully uploaded ${NEXUS_FILENAME} to ${ARTIFACT_URL}"
