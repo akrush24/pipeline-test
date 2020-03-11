@@ -32,7 +32,7 @@ node('docker') {
         sh "echo ${BUILD_NUMBER} > ${artifact_name}"
     }
     phase('push to nexus') {
-        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: '/'
+        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: ${BUILD_NUMBER}
     }
     phase('list files in work directory') {
         sh "ls -la"
