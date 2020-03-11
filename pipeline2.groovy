@@ -4,7 +4,10 @@ def nexusPublisher2(Map args=[:]) {
   def NEXUS_DIR_NAME = args.get('dir')
   def credentialsId = args.get('credentialsId', 'ucs-registry-rdojenkins')
 
-  env.NEXUS_DIR_NAME = NEXUS_DIR_NAME
+  env.NEXUS_DIR_NAME = ''
+  if (NEXUS_DIR_NAME) {
+    env.NEXUS_DIR_NAME = NEXUS_DIR_NAME
+  }
 
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
     env.NEXUS_FILENAME = filename
@@ -32,6 +35,7 @@ node('docker') {
     phase('push to nexus') {
         nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: env.NEXUS_DIR_NAME
     }
+
     phase('list files in work directory') {
         sh "ls -la"
     }
