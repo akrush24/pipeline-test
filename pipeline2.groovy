@@ -10,7 +10,7 @@ def nexusPublisher2(Map args=[:]) {
 
     env.FINAL_PATH = repo + "/" + filename
     if (nexusDir) {
-        env.FINAL_PATH = repo + "/" + nexusDir "/" + filename
+        env.FINAL_PATH = repo + "/" + nexusDir + "/" + filename
     }
 
     sh '''
