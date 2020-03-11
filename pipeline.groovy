@@ -13,7 +13,9 @@ pipeline {
     stages {
         stage("First step [show date]") {
             steps {
-                sh 'date'
+                sh '''
+                ls -R /etc/ > ${date +%H%M%S_%d%m%y}.log
+                '''
             }
         }
         stage("Second step [ls workdir]") {
@@ -21,19 +23,9 @@ pipeline {
                 sh "ls -la ."
             }
         }
-        stage("Pring ENVs") {
+        stage("Push to Nexus") {
             steps {
-                echo "VAR01 = ${env.VAR01}"
+
             }
-        }
-        stage("Test credential") {
-            steps {
-               echo "====== Test Credential ======"
-               withCredentials([usernamePassword(credentialsId:'0e996c65-dbb9-49b6-a759-e4a08730b983', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-               sh """
-               USERNAME: $USERNAME\nPASSWORD: $PASSWORD
-               """
-            }
-        }
     }
 }
