@@ -29,9 +29,8 @@ node('docker') {
         sh "echo ${BUILD_NUMBER} > ${artifact_name}"
     }
 
-    dirname = env.NEXUS_DIR_NAME
     phase('push to nexus') {
-        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: dirname
+        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: env.NEXUS_DIR_NAME
     }
     phase('list files in work directory') {
         sh "ls -la"
