@@ -11,6 +11,10 @@ node('docker') {
         echo ${BUILD_NUMBER} > ${BUILD_NUMBER}.log
         '''
     }
+    phase('Create file') {
+        nexusPublisher file: ${BUILD_NUMBER}.log, repo: 'testrail-releases'
+    }
+
     phase('list files in work directory') {
         sh "ls -la"
     }
