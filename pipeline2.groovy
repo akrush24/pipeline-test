@@ -7,15 +7,15 @@ def nexusPublisher2(Map args=[:]) {
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
     env.NEXUS_FILENAME = filename
     env.NEXUS_REPO = repo
+
+    env.FINAL_PATH = repo + "/" + filename
     if (nexusDir) {
-      env.NEXUS_DIR_NAME = nexusDir
-    } else {
-      env.NEXUS_DIR_NAME = ""
+        env.FINAL_PATH = repo + "/" + nexusDir "/" + filename
     }
 
     sh '''
        set +x
-       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${NEXUS_REPO}/${NEXUS_DIR_NAME}/${NEXUS_FILENAME}
+       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${FINAL_PATH}
        curl -i --user ${NEXUS_CREDENTIALS} --upload-file ${NEXUS_FILENAME} ${ARTIFACT_URL}
 
        echo "Successfully uploaded ${NEXUS_FILENAME} to ${ARTIFACT_URL}"
