@@ -4,9 +4,9 @@ def nexusPublisher2(Map args=[:]) {
   def dir = args.get('dir')
   def credentialsId = args.get('credentialsId', 'ucs-registry-rdojenkins')
 
-  def NEXUS_DIR_NAME = '/'
+  def env.NEXUS_DIR_NAME = '/'
   if (dir) {
-    NEXUS_DIR_NAME=dir
+    env.NEXUS_DIR_NAME=dir
   }
 
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
@@ -15,7 +15,7 @@ def nexusPublisher2(Map args=[:]) {
 
     sh '''
        set +x
-       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${NEXUS_REPO}/TEST/${NEXUS_FILENAME}
+       ARTIFACT_URL=https://mdcnexus.stageoffice.ru/repository/${NEXUS_REPO}/${NEXUS_DIR_NAME}/${NEXUS_FILENAME}
        curl -i --user ${NEXUS_CREDENTIALS} --upload-file ${NEXUS_FILENAME} ${ARTIFACT_URL}
 
        echo "Successfully uploaded ${NEXUS_FILENAME} to ${ARTIFACT_URL}"
@@ -33,7 +33,7 @@ node('docker') {
     }
     //dirname = ${env.BUILD_NUMBER}
     phase('push to nexus') {
-        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: 'test'
+        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: 'test01'
     }
     phase('list files in work directory') {
         sh "ls -la"
