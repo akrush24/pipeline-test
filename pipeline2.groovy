@@ -1,13 +1,13 @@
 def nexusPublisher2(Map args=[:]) {
   def filename = args.get('file')
   def repo = args.get('repo')
-  def dir = args.get('dir')
+  def NEXUS_DIR_NAME = args.get('dir')
   def credentialsId = args.get('credentialsId', 'ucs-registry-rdojenkins')
 
-  def env.NEXUS_DIR_NAME = '/'
-  if (dir) {
-    env.NEXUS_DIR_NAME=dir
-  }
+  //def NEXUS_DIR_NAME = '/'
+  //if (dir) {
+  //  NEXUS_DIR_NAME=dir
+  //}
 
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
     env.NEXUS_FILENAME = filename
