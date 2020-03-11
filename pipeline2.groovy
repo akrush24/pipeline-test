@@ -1,8 +1,4 @@
 node('docker') {
-    phase('Checkout') {
-        gitlab url: 'https://github.com/akrush24/pipeline-test.git',
-               branch: 'master'
-    }
     phase('list files in work directory') {
         sh "ls -la"
     }
@@ -11,10 +7,9 @@ node('docker') {
         echo ${BUILD_NUMBER} > ${BUILD_NUMBER}.log
         '''
     }
-    phase('Create file') {
+    phase('push to nexus') {
         nexusPublisher file: ${BUILD_NUMBER}.log, repo: 'testrail-releases'
     }
-
     phase('list files in work directory') {
         sh "ls -la"
     }
