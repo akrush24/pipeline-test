@@ -8,7 +8,8 @@ node('docker') {
         '''
     }
     phase('push to nexus') {
-        nexusPublisher file: ${BUILD_NUMBER}.log, repo: 'testrail-releases'
+        def artifact_name = "${env.JOB_BASE_NAME}_${env.BUILD_NUMBER}.log"
+        nexusPublisher file: artifact_name, repo: 'testrail-releases'
     }
     phase('list files in work directory') {
         sh "ls -la"
