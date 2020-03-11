@@ -4,13 +4,8 @@ def nexusPublisher2(Map args=[:]) {
   def NEXUS_DIR_NAME = args.get('dir')
   def credentialsId = args.get('credentialsId', 'ucs-registry-rdojenkins')
 
-  //def NEXUS_DIR_NAME = '/'
-  //if (dir) {
-  //  NEXUS_DIR_NAME=dir
-  //}
-
-  sh "echo ${NEXUS_DIR_NAME}"
   env.NEXUS_DIR_NAME = NEXUS_DIR_NAME
+
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
     env.NEXUS_FILENAME = filename
     env.NEXUS_REPO = repo
@@ -33,9 +28,9 @@ node('docker') {
     phase('Create file') {
         sh "echo ${BUILD_NUMBER} > ${artifact_name}"
     }
-    //dirname = ${env.BUILD_NUMBER}
+    dirname = ${env.NEXUS_DIR_NAME}
     phase('push to nexus') {
-        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: 'test01'
+        nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: dirname
     }
     phase('list files in work directory') {
         sh "ls -la"
