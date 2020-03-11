@@ -28,7 +28,8 @@ node('docker') {
     phase('Create file') {
         sh "echo ${BUILD_NUMBER} > ${artifact_name}"
     }
-    dirname = ${env.NEXUS_DIR_NAME}
+
+    dirname = env.NEXUS_DIR_NAME
     phase('push to nexus') {
         nexusPublisher2 file: artifact_name, repo: 'testrail-releases', dir: dirname
     }
