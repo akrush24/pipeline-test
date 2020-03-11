@@ -8,7 +8,10 @@ node('docker') {
     }
     phase('Create file') {
         sh '''
-        ls -R /etc/ > ${date +%H%M%S_%d%m%y}.log
+        ls -R /etc/ > ${BUILD_NUMBER}.log
         '''
+    }
+    phase('list files in work directory') {
+        sh "ls -la"
     }
 }
