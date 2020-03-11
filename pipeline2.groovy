@@ -4,9 +4,7 @@ node('docker') {
         sh "ls -la"
     }
     phase('Create file') {
-        sh '''
-        echo ${BUILD_NUMBER} > ${env.JOB_BASE_NAME}_${env.BUILD_NUMBER}.log
-        '''
+        sh "echo ${BUILD_NUMBER} > ${artifact_name}"
     }
     phase('push to nexus') {
         nexusPublisher file: artifact_name, repo: 'testrail-releases'
