@@ -1,7 +1,7 @@
 def nexusPublisher2(Map args=[:]) {
   def filename = args.get('file')
   def repo = args.get('repo')
-  def repo = args.get('dir')
+  def dir = args.get('dir')
   def credentialsId = args.get('credentialsId', 'ucs-registry-rdojenkins')
 
   def NEXUS_DIR_NAME = '/'
