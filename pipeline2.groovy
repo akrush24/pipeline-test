@@ -9,7 +9,7 @@ def nexusPublisher2(Map args=[:]) {
   //  NEXUS_DIR_NAME=dir
   //}
 
-  echo ${NEXUS_DIR_NAME}
+  sh "echo ${NEXUS_DIR_NAME}
 
   withCredentials([usernameColonPassword(credentialsId: credentialsId, variable: 'NEXUS_CREDENTIALS')]) {
     env.NEXUS_FILENAME = filename
